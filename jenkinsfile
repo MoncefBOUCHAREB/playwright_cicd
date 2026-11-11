@@ -6,6 +6,14 @@ pipeline {
         }
     }
 
+    parametrs {
+        //booleanParam(name: 'isBrowser', defaultValue: true, description: 'lancer tout')
+        booleanParam(name: 'isTAG', defaultValue: true, description: 'lancer tout')
+        //choice(name: 'Brows', choices: ['chromium', 'firefox', 'webjit'], description: 'choisir browser')
+        choice(name: 'TAG', choices: ['tous', '@smoke', '@regression'], description: 'Tag des tests à lancer')
+
+    }
+
     stages {
          stage('Check version nodejs') {
             steps {
@@ -20,11 +28,18 @@ pipeline {
         }
         stage('Lancer le test') {
             steps {
-                sh 'npx playwright test'
+               scripts{
+                    if(params.isTAG == true){
+                        sh"npx playwright test"
+                    }else {
+                        sh "npx playwright test --grep '${params.TAG}'"
+                    }
+                }
+               
             }
         }
-       
-         
+          
     }
 } 
+                    
 
