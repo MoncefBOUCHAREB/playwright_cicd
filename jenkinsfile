@@ -7,10 +7,9 @@ pipeline {
     }
 
     parameters {
-        //booleanParam(name: 'isBrowser', defaultValue: true, description: 'lancer tout')
+       
         booleanParam(name: 'isTAG', defaultValue: true, description: 'lancer tout')
-        //choice(name: 'Brows', choices: ['chromium', 'firefox', 'webjit'], description: 'choisir browser')
-        choice(name: 'TAG', choices: ['tous', '@smoke', '@regression'], description: 'Tag des tests à lancer')
+        choice(name: 'TAG', choices: ['@smoke', '@regression'], description: 'Tag des tests à lancer')
 
     }
 
