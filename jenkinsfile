@@ -28,7 +28,7 @@ pipeline {
         }
         stage('Lancer le test') {
             steps {
-               scripts{
+               script{
                     if(params.isTAG == true){
                         sh"npx playwright test"
                     }else {
