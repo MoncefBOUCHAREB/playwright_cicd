@@ -6,7 +6,7 @@ pipeline {
         }
     }
 
-    parametrs {
+    parameters {
         //booleanParam(name: 'isBrowser', defaultValue: true, description: 'lancer tout')
         booleanParam(name: 'isTAG', defaultValue: true, description: 'lancer tout')
         //choice(name: 'Brows', choices: ['chromium', 'firefox', 'webjit'], description: 'choisir browser')
