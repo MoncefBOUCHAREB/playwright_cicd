@@ -1,4 +1,5 @@
-pipeline {
+
+ pipeline {
     agent {
         docker{
             image 'mcr.microsoft.com/playwright:v1.65.0-jammy'
@@ -7,9 +8,10 @@ pipeline {
     }
 
     parameters {
-       
+        booleanParam(name: 'isBrowser', defaultValue: true, description: 'lancer tout')
+        choice(name: 'Brows', choices: ['chromium', 'firefox', 'webjit'], description: 'choisir browser')
         booleanParam(name: 'isTAG', defaultValue: true, description: 'lancer tout')
-        choice(name: 'TAG', choices: ['@smoke', '@regression'], description: 'Tag des tests à lancer')
+        choice(name: 'TAG', choices: [ '@smoke', '@regression'], description: 'Tag des tests à lancer')
 
     }
 
@@ -28,12 +30,20 @@ pipeline {
         stage('Lancer le test') {
             steps {
                script{
-                    if(params.isTAG == false){
-                        sh"npx playwright test"
-                    }else {
-                        sh "npx playwright test --grep '${params.TAG}'"
+                    if(params.isTAG == true && params.isBrowser == true){
+                        sh"npx playwright test --project=${params.Brows} --grep='${params.TAG}"
                     }
+                    else {
+                        if(params.isTAG ==true){
+                            sh "npx playwright test --grep '${params.TAG}'"
+                        }
+                        else{
+                            sh "npx playwright test --project=${params.Brows}"
+                        }
+                    }
+               
                 }
+               
                
             }
         }
